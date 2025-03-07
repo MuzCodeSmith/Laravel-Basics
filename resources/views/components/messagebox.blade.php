@@ -1,1 +1,3 @@
-<span>You'r are successfully logged in</span>
+<span {{ $attributes->merge(['class' => $class])}} >
+{{$msg}}
+</span>
