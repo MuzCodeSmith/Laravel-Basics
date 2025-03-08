@@ -23,6 +23,9 @@
             <div class="form-group mb-3">
                 <select id="state-dd" class="form-control"></select>
             </div>
+            <div class="form-group mb-3">
+                <select id="city-dd" class="form-control"></select>
+            </div>
             </form>
         </div>
         </div>
@@ -45,6 +48,24 @@
                         $('#state-dd').append('<option value="'+val.id+'"> '+val.name+' </option>')
                         });
                         $('#city-dd').html('<option value="">Select City</option>');
+                    }
+                })
+            })
+
+            $('#state-dd').change(function(event){
+                var idState = this.value;
+                $("#city-dd").html('');
+
+                $.ajax({
+                    url:"api/fetch-cities",
+                    type:"POST",
+                    dataType:"json",
+                    data:{state_id:idState,_token:"{{csrf_token()}}"},
+                    success:function(response){
+                        $('#city-dd').html('<option value="">Select City</option>');
+                        $.each(response.cities,function(index, val){
+                            $('#city-dd').append('<option value="'+val.id+'"> '+val.name+' </option>')
+                        });
                     }
                 })
             })
